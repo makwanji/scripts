@@ -1,0 +1,22 @@
+# ##################################################################################
+# File Name    : https://github.com/makwanji/dba_scripts/sql/rman_restore_db_f2.rman
+# Author       : Jignesh Makwana
+# Description  : RMAN commnad to restore database
+# Call Syntax  : rman @<file_name>
+# Requirements : Oracle Database 
+# Version      : 1.0
+# Last Modified: 23/07/2012
+# ##################################################################################
+
+
+run {
+allocate channel c1 device type disk;
+allocate channel c2 device type disk;
+allocate channel c3 device type disk;
+allocate channel c4 device type disk;
+duplicate target database to E122V backup location '/u04/rman/bkp';
+release channel c1;
+release channel c2;
+release channel c3;
+release channel c4;
+}

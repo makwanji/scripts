@@ -1,8 +1,24 @@
-run {
+# ##################################################################################
+# File Name    : https://github.com/makwanji/dba_scripts/sql/rman_restore_db_f1.rman
+# Author       : Jignesh Makwana
+# Description  : RMAN commnad to restore database
+# Call Syntax  : rman @<file_name>
+# Requirements : Oracle Database 
+# Version      : 1.0
+# Last Modified: 23/07/2012
+# ##################################################################################
 
+## Restore controlfile from backup before starting db restore
+
+# rman target /
+# RESTORE CONTROLFILE FROM "/u04/rman/bkp/E122V_ctl_20190726_0mu7jh8i";
+
+
+
+
+run {
 allocate channel c1 device type disk;
 allocate channel c2 device type disk;
-
 set newname for datafile 1 to '+DATA1';
 set newname for datafile 2 to '+DATA1';
 set newname for datafile 3 to '+DATA1';
@@ -144,10 +160,5 @@ RESTORE DATABASE;
 SWITCH DATAFILE ALL;
 release channel c1;
 release channel c2;
-
 }
-
-
-rman target /
-RESTORE CONTROLFILE FROM "/u04/rman/bkp/E122V_ctl_20190726_0mu7jh8i";
 
