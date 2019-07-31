@@ -222,8 +222,8 @@ quit
 udevadm info --query=property /dev/xvdl1 | grep ID_PART_ENTRY_UUID
 
 cat > /etc/udev/rules.d/99-oracle-asmdevices.rules <<EOF
-KERNEL=="xvd??", ENV{ID_PART_ENTRY_UUID}=="642f888b-db18-4538-8caa-132b765b1ac7", SYMLINK+="oracleasm/disk01", OWNER="oracle", GROUP="dba", MODE="0660"
-KERNEL=="xvd??", ENV{ID_PART_ENTRY_UUID}=="e059797a-d350-47cd-bb5b-e5a01553770c", SYMLINK+="oracleasm/disk02", OWNER="oracle", GROUP="dba", MODE="0660"
+KERNEL=="xvd??", ENV{ID_PART_ENTRY_UUID}=="ad4b9fef-a590-480f-baef-627b1ef773a4", SYMLINK+="oracleasm/disk01", OWNER="oracle", GROUP="dba", MODE="0660"
+KERNEL=="xvd??", ENV{ID_PART_ENTRY_UUID}=="a12f74db-fdda-491c-b65d-680da0581251", SYMLINK+="oracleasm/disk02", OWNER="oracle", GROUP="dba", MODE="0660"
 KERNEL=="xvd??", ENV{ID_PART_ENTRY_UUID}=="8fa30be3-244e-4f53-af2c-8d9db1492b58", SYMLINK+="oracleasm/disk03", OWNER="oracle", GROUP="dba", MODE="0660"
 KERNEL=="xvd??", ENV{ID_PART_ENTRY_UUID}=="4885524d-4b7a-48ee-aca3-2c90d804bf79", SYMLINK+="oracleasm/disk04", OWNER="oracle", GROUP="dba", MODE="0660"
 KERNEL=="xvd??", ENV{ID_PART_ENTRY_UUID}=="560d278a-22b6-4afe-9a3e-63d568b27f26", SYMLINK+="oracleasm/disk05", OWNER="oracle", GROUP="dba", MODE="0660"

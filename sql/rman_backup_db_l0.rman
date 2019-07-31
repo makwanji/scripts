@@ -31,7 +31,6 @@ run {
  crosscheck archivelog all;
  delete noprompt obsolete redundancy 2 device type disk;
  delete noprompt expired archivelog all;
- delete noprompt archivelog until time 'sysdate-1';
  backup current controlfile format '/u01/bkp/current/%d_ctl_%T_%u';
  release channel d1;
  release channel d2;

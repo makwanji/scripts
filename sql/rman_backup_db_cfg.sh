@@ -24,8 +24,23 @@ run {
 	CONFIGURE CONTROLFILE AUTOBACKUP ON;
 	CONFIGURE CONTROLFILE AUTOBACKUP FORMAT FOR DEVICE TYPE DISK TO '/u04/FRA/E122V/%d_%F.CTL';
 	CONFIGURE RMAN OUTPUT TO KEEP FOR 7 DAYS;
+	CONFIGURE RETENTION POLICY TO REDUNDANCY 2;
 	show all;
 }
+
+#for ASM
+run {
+	CONFIGURE ARCHIVELOG DELETION POLICY TO BACKED UP 2 TIMES TO DISK;
+	CONFIGURE CHANNEL DEVICE TYPE DISK FORMAT '+RECO1/%d_%I_%T_%U' MAXOPENFILES 1;
+	CONFIGURE CHANNEL 1 DEVICE TYPE DISK FORMAT '+RECO1/%d_%I_%T_%U' MAXOPENFILES 1;
+	CONFIGURE CONTROLFILE AUTOBACKUP ON;
+	CONFIGURE CONTROLFILE AUTOBACKUP FORMAT FOR DEVICE TYPE DISK TO '+RECO1/%d_%F.CTL';
+	CONFIGURE RMAN OUTPUT TO KEEP FOR 7 DAYS;
+	CONFIGURE RETENTION POLICY TO REDUNDANCY 2;
+	show all;
+}
+
+
 
 
 # rman scripts
@@ -40,3 +55,19 @@ plus archivelog filesperset 8 tag "archivelog";
 # rman - shell
 
 $ rman @simple.rman
+
+
+# configure retention policy to recovery window of 7 days;
+
+# rman backup cleanup
+crosscheck backup;
+delete expired backup;
+list backup summary;
+
+
+# rman backup / archivelog housekeep
+backup archivelog all;
+delete noprompt archivelog all;
+delete obsolete;
+delete obsolete redundancy 2 device type disk;
+noprompt
