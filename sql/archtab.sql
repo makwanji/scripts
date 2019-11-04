@@ -1,11 +1,11 @@
 -- -----------------------------------------------------------------------------------
 -- File Name    : archtab.sql
 -- Author       : Jignesh Makwana
--- Description  : Find the tablespace usage
--- Call Syntax  : @tbsn (connect as a apps user)
--- Requirements : connect with the apps user / appsread
+-- Description  : Find the archive log switch in last 7 day
+-- Call Syntax  : @archtab (connect as a apps user/system users)
+-- Requirements : connect with the apps/system user
 -- Version      : 1.0
--- Last Modified: 23/07/2012
+-- Last Modified: 23/07/2014
 -- -----------------------------------------------------------------------------------
 
 set linesize 120
