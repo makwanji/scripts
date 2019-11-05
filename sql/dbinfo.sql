@@ -14,12 +14,23 @@ set pagesize 100
 prompt ==> Database information..!
 col OPEN_MODE for a11
 col FLASHBACK_ON for a4
-select 	DBID, NAME, LOG_MODE, OPEN_MODE, PROTECTION_MODE, PROTECTION_LEVEL, DATABASE_ROLE, FLASHBACK_ON
-from 	v$database;
+col name for a10
+col DATABASE_ROLE for a10
+col LOG_MODE for a14
+
+col PROTECTION_MODE for a20
+col PROTECTION_LEVEL for a20
+
+select 	DBID, NAME, LOG_MODE, OPEN_MODE, PROTECTION_MODE, PROTECTION_LEVEL, DATABASE_ROLE, FLASHBACK_ON from 	v$database;
 
 prompt ==> Datafile information..!
 col FILE_NAME for a60
-col TABLESPACE_NAME for a15
+col TABLESPACE_NAME for a20
+col STATUS for a11
+col SIZE_GB for a8
+col MSize_GB for a8
+col AUTOEXTENSIBLE for a3
+
 select 	TABLESPACE_NAME, FILE_NAME, STATUS, to_char(round (BYTES/1024/1024/1024,2), '9999.99') Size_GB, 
 		to_char(round (BYTES/1024/1024/1024,2), '9999.99') MSize_GB, STATUS, AUTOEXTENSIBLE 
 from dba_data_files;
@@ -42,3 +53,4 @@ col MEMBER for a60
 select 	MEMBER, b.GROUP#, THREAD#, to_char(round (BYTES/1024/1024/1024,2), '9999.99') Size_GB, b.STATUS, b.ARCHIVED
 from 	v$logfile a, gv$log b
 where	a.GROUP# = b.GROUP#;
+
