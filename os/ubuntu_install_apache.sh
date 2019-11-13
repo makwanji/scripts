@@ -10,4 +10,6 @@
 #  11/13/2019          Jig                   Creation
 # -------------------------------------------------------------------------------
 
-sudo yum update -y
+# Update Server
+sudo apt update
+sudo apt -y upgrade
