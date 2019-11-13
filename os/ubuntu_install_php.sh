@@ -10,9 +10,6 @@
 #  11/13/2019          Jig                   Creation
 # -------------------------------------------------------------------------------
 
-# Update Server
-sudo apt update
-sudo apt -y upgrade
 
 #PHP Packages
-sudo apt install php libapache2-mod-php php-mysql -y
+sudo apt-get install php libapache2-mod-php php-mysql -y
