@@ -1,9 +1,9 @@
 #!/bin/ksh
 # set -x
 # -------------------------------------------------------------------------------
-#  SCRIPT          : ubuntu_install_apache.sh
-#  Application     : Install Apache in Ubuntu server
-#  Fonction        : call script to instll apache in Ubuntu folder
+#  SCRIPT          : ubuntu_install_php.sh
+#  Application     : Install PHP in Ubuntu server
+#  Fonction        : call script to instll PHP in Ubuntu folder
 #  History
 #  --------
 #  Date                Author          		 Update
@@ -14,7 +14,5 @@
 sudo apt update
 sudo apt -y upgrade
 
-#Install Apache2
-sudo apt install unzip -y
-sudo apt-get install apache2 -y
-sudo systemctl restart apache2
+#PHP Packages
+sudo apt install php libapache2-mod-php php-mysql -y
