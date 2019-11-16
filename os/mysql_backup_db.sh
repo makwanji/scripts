@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # set -x
 # -------------------------------------------------------------------------------
@@ -12,7 +12,8 @@
 # -------------------------------------------------------------------------------
 
 # soruce file
-. ./mysql_backup_db.env
+# Please deploy script in $HOME/script folder
+. $HOME/scripts/myserver_env.sh
 
 myecho "List variable"
 myecho "Server Name -> ${BKP_SERVER_NAME}"
@@ -31,6 +32,8 @@ myecho "Database name -> ${BKP_DB_NAME}"
 myecho "Database backup to \tmp location"
 mysqldump -h ${BKP_SERVER_NAME} -u ${BKP_USER_NAME} -p${BKP_USER_PWD} ${BKP_DB_NAME} > /tmp/${BKP_FILE_NAME}.sql
 
-
 myecho "copy backup to aws s3"
 aws s3 cp /tmp/${BKP_FILE_NAME}.sql s3://${BKP_S3_NAME}/
+
+myecho "Remove backup from local disk"
+rm -f /tmp/${BKP_FILE_NAME}.sql
