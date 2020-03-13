@@ -1,11 +1,18 @@
--- Name: db_start_time.sql
--- Purpose: to find the database start time
---
---
---
+-- -----------------------------------------------------------------------------------
+-- File Name    : db_start_time.sql
+-- Author       : Jignesh Makwana
+-- Description  : Find the database startup time
+-- Call Syntax  : @dbidb_start_timenfo 
+-- Requirements : 
+-- Version      : 1.0
+-- Last Modified: 12/03/2020
+-- -----------------------------------------------------------------------------------
+
 
 COL INSTANCE_NAME FOR A10
-SELECT INSTANCE_NAME INS_NAME,TO_CHAR(STARTUP_TIME, 'HH24:MI DD-MON-RRRR') STARTUP_TIME FROM DBA_HIST_DATABASE_INSTANCE ORDER BY STARTUP_TIME DESC;
+SELECT INSTANCE_NAME INS_NAME,TO_CHAR(STARTUP_TIME, 'HH24:MI DD-MON-RRRR') STARTUP_TIME 
+FROM DBA_HIST_DATABASE_INSTANCE ORDER BY STARTUP_TIME DESC;
+
 
 SET LINE 60
 COLUMN HOSTNAME FOR A60

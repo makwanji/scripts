@@ -1,0 +1,9 @@
+-- -----------------------------------------------------------------------------------
+-- File Name    : ebs_postcone_db_sc1.sql
+-- Author       : Jignesh Makwana
+-- Description  : Find the database startup time
+-- Call Syntax  : @ebs_postcone_db_sc1 
+-- Requirements : 
+-- Version      : 1.0
+-- Last Modified: 12/03/2020
+-- -----------------------------------------------------------------------------------
