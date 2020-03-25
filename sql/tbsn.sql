@@ -8,14 +8,14 @@
 -- Last Modified: 23/07/2012
 -- -----------------------------------------------------------------------------------
 
-set linesize 120
+set linesize 180
 set pagesize 100
 col TABLESPACE_NAME for a25
-col BYTES_MB for 999,999.999
-col FREE_BYTES_MB for 99,999.999
-col ACTUAL_USED_MB for 99,999.999
+col BYTES_MB for 99,999,999.999
+col FREE_BYTES_MB for 99,999,999.999
+col ACTUAL_USED_MB for 99,999,999.999
 col FILE_USED_PTC for a8
-col MAXBYTES_MB for 9999,999.999
+col MAXBYTES_MB for 99,999,999.999
 col BAL_MAX_EXT_MB for 999,999.999
 col max_ext_used_pt for a8
 col AUTO_EXTEND for a3
