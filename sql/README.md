@@ -23,9 +23,11 @@ duplicate target database to CNV backup location '/tmp/20140906/';
 
 
 #### Code
+```ruby
 rman auxiliary / 
 
 run {
 startup nomount;
 duplicate target database to CNV backup location '/tmp/20140906/';
 }
+```
