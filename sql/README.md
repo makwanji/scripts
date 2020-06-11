@@ -1,8 +1,7 @@
-# 1. [Oracle Database]
 <!-- /TOC -->
-
-## [1.1 Database Perfomance](#database-perfomance)
-### DB Locking session
+# [1. Oracle Database]
+## [1.1 Database Perfomance]
+### [1.1.1 DB Locking session](#db-locking-session)
 
 
 ##Database Object
@@ -56,7 +55,7 @@ duplicate target database to CNV backup location '/tmp/20140906/';
 
 
 
-#### Code
+#db-locking-session
 ```bash
 
 cat > dbplock.sql << EOF
