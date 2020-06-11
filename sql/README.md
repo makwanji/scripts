@@ -20,3 +20,12 @@ run {
 startup nomount;
 duplicate target database to CNV backup location '/tmp/20140906/';
 }
+
+
+#### Code
+rman auxiliary / 
+
+run {
+startup nomount;
+duplicate target database to CNV backup location '/tmp/20140906/';
+}
