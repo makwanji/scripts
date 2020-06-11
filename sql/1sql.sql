@@ -7,6 +7,9 @@
 -- 500: Perfomace tunning
 
 -- 501: find locking session (if any) 
+
+```shell
+cat > dbplock.sql<< EOF
 SET PAGESIZE 60
 SET LINESIZE 300
 
@@ -17,9 +20,12 @@ COLUMN object_name FORMAT A30
 COLUMN locked_mode FORMAT A35
 
 SELECT b.inst_id, b.session_id AS sid, NVL(b.oracle_username, '(oracle)') AS username, a.owner AS object_owner, a.object_name, Decode(b.locked_mode, 0, 'None', 1, 'Null (NULL)', 2, 'Row-S (SS)', 3, 'Row-X (SX)', 4, 'Share (S)', 5, 'S/Row-X (SSX)', 6, 'Exclusive (X)', b.locked_mode) locked_mode, b.os_user_name FROM   dba_objects a, gv$locked_object b WHERE  a.object_id = b.object_id ORDER BY 1, 2, 3, 4; 
+EOF
+```
 
 -- 502: long running sessoin
 
+```
 set lines 400 pages 400
 select s.username,s.status,s.machine,s.sql_id,s.sid,s.serial#,s.last_call_et/60 mins_running,q.sql_text from v$session s 
 join v$sqltext_with_newlines q
@@ -27,6 +33,7 @@ on s.sql_address = q.address
  where status='ACTIVE' and type <>'BACKGROUND'
 and last_call_et> 1800 
 order by sid,serial#,q.piece; 
+```
 
 -- 503: list all running sessions
 
