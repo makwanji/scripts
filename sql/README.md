@@ -1,64 +1,8 @@
-<!-- /TOC -->
-# [1. Oracle Database]
-## [1.1 Database Perfomance]
-### [1.1.1 DB Locking session](#db-locking-session)
+# Oracle Database SQL's
 
-
-##Database Object
-##Database Tablespace
-##RMAN Backup/Restore
-
-Help document
-
-
-select 'set newname for datafile '||file#||' to ''+DATA1'';' from v$datafile; 
-select 'set newname for logfile '||file#||' to ''+DATA1'';' from v$logfile; 
-
-set newname for tempfile <fileno> to '<path>'
-set newname for logfile 1 to '+REDO'
-
-
-
-
-##### Table of Contents  
-[Database Perfomance](#Database-Perfomance)  
-[Emphasis](#emphasis)  
-...snip...    
-<a name="headers"/>
-## Database-Perfomance
-
-
-
-
-
-
-# TSA RMAN Example
-
-rman auxiliary / 
-
-run {
-startup nomount;
-duplicate target database to CNV backup location '/tmp/20140906/';
-}
-
-
-#### Code
-```sql
-rman auxiliary / 
-
-run {
-startup nomount;
-duplicate target database to CNV backup location '/tmp/20140906/';
-}
-```
-
-
-
-
-#db-locking-session
-```bash
-
-cat > dbplock.sql << EOF
+### Database lock
+```shell
+cat > dbplock.sql<< EOF
 SET PAGESIZE 60
 SET LINESIZE 300
 
@@ -69,7 +13,78 @@ COLUMN object_name FORMAT A30
 COLUMN locked_mode FORMAT A35
 
 SELECT b.inst_id, b.session_id AS sid, NVL(b.oracle_username, '(oracle)') AS username, a.owner AS object_owner, a.object_name, Decode(b.locked_mode, 0, 'None', 1, 'Null (NULL)', 2, 'Row-S (SS)', 3, 'Row-X (SX)', 4, 'Share (S)', 5, 'S/Row-X (SSX)', 6, 'Exclusive (X)', b.locked_mode) locked_mode, b.os_user_name FROM   dba_objects a, gv\$locked_object b WHERE  a.object_id = b.object_id ORDER BY 1, 2, 3, 4; 
+EOF
+```
+
+### Long running session
+
+``` 
+cat > dbplongses.sql << EOF
+set lines 400 pages 400
+select s.username,s.status,s.machine,s.sql_id,s.sid,s.serial#,s.last_call_et/60 mins_running,q.sql_text 
+from v\$session s 
+join v\$sqltext_with_newlines q
+on s.sql_address = q.address
+ where status='ACTIVE' and type <>'BACKGROUND'
+and last_call_et> 1800 
+order by sid,serial#,q.piece; 
+EOF
+```
+
+
+### All running session
+``` 
+cat > dbpallses.sql << EOF
+set lines 200 pages 1000
+col MACHINE for a35
+col PROGRAM for a35
+col TERMINAL for a15
+col USERNAME for a20
+col sql_sid for a20
+col STATUS for a10
+col OSUSER for a10
+col LOGIN_TIME for a25
+COL EVENT FOR A30
+select name,open_mode from v$database;
+select sid,serial#,status,program,machine,process,username,sql_id,to_char(logon_time, 'hh24:mi dd/mm/yy') login_time from v\$session where username is not null order by status,LOGIN_TIME;
+select sid,serial#,status,program,machine,process,username,sql_id,to_char(logon_time, 'hh24:mi dd/mm/yy') login_time from v\$session where username is not null and status='ACTIVE' order by status,LOGIN_TIME; 
 
 EOF
+```
+
+### details about session
 
 ```
+cat > dbpdigses.sql
+
+select sid,serial#,status,program,machine,username,sql_id,to_char(logon_time, 'hh24:mi dd/mm/yy') login_time from v\$session where sid=&sid; 
+
+EOF
+```
+
+### SQLID Plan
+
+
+```
+cat > dbpsqlplan.sql
+
+col begin_time for a25
+col end_time for a11
+col inst for 99999
+col snapid for 999999
+set lines 200 
+set pages 20000 
+select snap_id snapid,
+(select substr(BEGIN_INTERVAL_TIME,1,18)||' '||substr(BEGIN_INTERVAL_TIME,24,2) from dba_hist_snapshot b where b.snap_id=a.snap_id and a.INSTANCE_NUMBER=b.INSTANCE_NUMBER) begin_time,(select substr(end_INTERVAL_TIME,11,8)||' '||substr(end_INTERVAL_TIME,24,2) from dba_hist_snapshot b where b.snap_id=a.snap_id and
+a.INSTANCE_NUMBER=b.INSTANCE_NUMBER) end_time
+,INSTANCE_NUMBER inst , PLAN_HASH_VALUE,
+EXECUTIONS_DELTA Executions,
+ROWS_PROCESSED_DELTA rows1,
+round( CPU_TIME_DELTA /1000000,0) cpu_time,round(IOWAIT_DELTA /1000000,0) io_wait,
+round( ELAPSED_TIME_DELTA /1000000,0) elapsed
+from wrh$_sqlstat a where sql_id in('&SQL_ID')
+order by snap_id, INSTANCE_NUMBER; 
+
+EOF
+```
+
