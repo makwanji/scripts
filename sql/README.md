@@ -23,7 +23,7 @@ duplicate target database to CNV backup location '/tmp/20140906/';
 
 
 #### Code
-```ruby
+```sql
 rman auxiliary / 
 
 run {
