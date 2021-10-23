@@ -1,5 +1,5 @@
 -- -----------------------------------------------------------------------------------
--- File Name    : https://github.com/makwanji/dba_scripts/os/oel7_install.sh
+-- File Name    : https://github.com/makwanji/scripts/os/oel7_install.sh
 -- Author       : Jignesh Makwana
 -- Description  : this script will configure the packages to intall oracle softwares
 -- Call Syntax  : sh oel7_install.sh

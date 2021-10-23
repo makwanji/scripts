@@ -1,5 +1,5 @@
 -- -----------------------------------------------------------------------------------
--- File Name    : https://github.com/makwanji/dba_scripts/sql/tbsf.sql
+-- File Name    : https://github.com/makwanji/scripts/sql/tbsf.sql
 -- Author       : Jignesh Makwana
 -- Description  : Find the list of files in database
 -- Call Syntax  : @tbsn (connect as a apps user)

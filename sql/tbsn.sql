@@ -1,5 +1,5 @@
 -- -----------------------------------------------------------------------------------
--- File Name    : https://github.com/makwanji/dba_scripts/sql/tbsn.sql
+-- File Name    : https://github.com/makwanji/scripts/sql/tbsn.sql
 -- Author       : Jignesh Makwana
 -- Description  : Find the tablespace usage
 -- Call Syntax  : @tbsn (connect as a apps user)
