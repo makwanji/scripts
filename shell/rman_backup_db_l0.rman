@@ -1,0 +1,40 @@
+# ##################################################################################
+# File Name    : https://github.com/makwanji/scripts/sql/rman_backup_db_l0.rman
+# Author       : Jignesh Makwana
+# Description  : RMAN commnad to full backup of oracle database
+# Call Syntax  : rman @<file_name>
+# Requirements : Oracle Database 
+# Version      : 1.0
+# Last Modified: 23/07/2012
+# ##################################################################################
+
+connect target sys/oracle;
+
+run {
+ allocate channel d1 type disk;
+ allocate channel d2 type disk;
+ allocate channel d3 type disk;
+ allocate channel d4 type disk;
+ crosscheck backup;
+ crosscheck archivelog all;
+ sql 'alter system checkpoint global';
+ sql 'alter system archive log current';
+ backup as compressed backupset full format '/u01/bkp/current/%d_FULL_%T_%u_s%s_p%p'
+ database PLUS archivelog format '/u01/bkp/current/%d_AL_%T_%u_s%s_p%p' ;
+ sql 'alter system switch logfile';
+ sql 'alter system switch logfile';
+ sql 'alter system switch logfile';
+ sql 'alter system archive log current';
+ sql 'alter system archive log current';
+ backup as compressed backupset archivelog all not backed up 1 times format '/u01/bkp/current/%d_AL_%T_%u_s%s_p%p';
+ crosscheck backup;
+ crosscheck archivelog all;
+ delete noprompt obsolete redundancy 2 device type disk;
+ delete noprompt expired archivelog all;
+ backup current controlfile format '/u01/bkp/current/%d_ctl_%T_%u';
+ release channel d1;
+ release channel d2;
+ release channel d3;
+ release channel d4;
+}
+
